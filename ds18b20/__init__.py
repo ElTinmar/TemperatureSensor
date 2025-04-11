@@ -1,6 +1,6 @@
 import serial
 
-class CommunicationError(serial.SerialException):
+class CommunicationError(Exception):
     ... 
 
 def read_temperature_celsius(port: str = '/dev/ttyUSB0') -> float:
@@ -9,5 +9,5 @@ def read_temperature_celsius(port: str = '/dev/ttyUSB0') -> float:
         ser = serial.Serial(port, baudrate = 9600)
         return float(ser.readline())
     
-    except:
-        raise CommunicationError
+    except Exception as e:
+        raise CommunicationError('Temperature sensor error') from e
